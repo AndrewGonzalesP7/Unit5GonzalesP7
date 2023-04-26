@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject titleScreen;
     public TextMeshProUGUI livesText;
     private int lives;
+    public GameObject pauseScreen;
+    private bool paused;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,15 @@ public class GameManager : MonoBehaviour
        
     }
 
-    
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ChangePaused();
+        }
+    }
+
+
     IEnumerator SpawnTarget()
     {
         while (isGameActive)
@@ -72,5 +82,20 @@ public class GameManager : MonoBehaviour
         UpdateScore(0);
         UpdateLives(3);
         titleScreen.gameObject.SetActive(false);
+    }
+    void ChangePaused()
+    {
+        if (!paused)
+        {
+            paused = true;
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            paused = false;
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
 }
